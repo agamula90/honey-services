@@ -4,8 +4,9 @@
   "description": "Honey services",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "prebuild": "mkdir -p dist/public && cp -r assets/* dist/public/"
+    "prepare": "mkdir -p dist/public && cp -r assets/* dist/public/",
+    "run":  "npx parcel src/index.html",
+    "build": "parcel build src/index.html"
   },
   "repository": {
     "type": "git",
