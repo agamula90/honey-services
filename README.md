@@ -1,1 +1,3 @@
-After app assembling postbuild script should be run from package.json
+Before assemble use `prebuild` script from package.json
+
+To run app use command: `npx parcel src/index.html`
