@@ -1,0 +1,12 @@
+.content-item {
+    margin: 0 1.2rem 0.5rem 1.2rem;
+    clear: left;
+}
+
+.content-item > img {
+    float: left;
+}
+
+.content-item > p {
+    display: inline;
+}
