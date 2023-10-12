@@ -3,12 +3,12 @@ import React from "react";
 export default function ContactUs() {
     return <address>
         Наша адреса: <strong>Чернівецька обл., Глибоцький р-н, с Михайлівка, вул Шевченка 6.</strong>
-        <hr />
+        <br />
         Контактні дані:
             <ul>
                 <li>
                     <a href="tel:+380957874423">+380957874423</a>,&nbsp;
-                    <a href="tel:+380987409747">+380987409747</a>
+                    <a href="tel:+380987409747">+380987409747</a> &nbsp;
                     Галина
                 </li>
                 <li>

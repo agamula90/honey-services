@@ -1,83 +1,83 @@
 import Navigation from './Navigation';
-import Banner, { BannerDTO, BannerState, MoveDirection } from './Banner';
+import Banner, { BannerState, MoveDirection } from './Banner';
 import ContactUs from './ContactUs';
 import React, { useEffect, useState } from 'react';
 import { useAsync } from 'react-async-hook';
+import ContentItems, { ContentItemDTO } from './ContentItems';
+import Aside, { AsideItem } from './Aside';
 
-const getBanners = function getBanners(): Array<BannerDTO> {
+const getContentItems = function getContentItems(): Array<ContentItemDTO> {
   return [
     {
-      imageUrl: 'img/banner1.jpg',
-      imageWidth: 923,
-      imageHeight: 450,
-      imageAlternateText: 'Апібудинки в очікуванні гостей',
-      phoneImageUrl: 'img/banner1_narrow.jpg',
-      phoneImageWidth: 410,
-      phoneImageHeight: 200,
+      text: 'Що ж таке апітерапія? Дослівно апітерапія означає лікування продуктами бджільництва. Тобто це не тільки сон на вуликах, а ще й лікування прополісом, пергою, маточним молочком, бджолиним підмором тощо.',
+      imageUrl: 'content1.jpg',
+      imageDescription: 'Бджоли готові зігріти своїм теплом',
     },
     {
-      imageUrl: 'img/banner2.jpg',
-      imageWidth: 751,
-      imageHeight: 450,
-      imageAlternateText: 'Апібудинки пригощають',
-      phoneImageUrl: 'img/banner2_narrow.jpg',
-      phoneImageWidth: 334,
-      phoneImageHeight: 200,
+      text: 'Апітерапію офіційна медицина визнала не так давно: у 1959 році. Саме тоді виникло й поняття апітерапевт. Не кожен пасічник є апітерапевтом, для цього потрібні грунтовні знання у сфері медицини, зокрема неврології та фізіотерапії.',
+      imageUrl: 'content2.jpg',
+      imageDescription:
+        'Апібудинки як місце для відпочинку як для великих, так і для самих менших',
     },
     {
-      imageUrl: 'img/banner3.jpg',
-      imageWidth: 1098,
-      imageHeight: 450,
-      imageAlternateText: 'Бджола у пошуках сот',
-      phoneImageUrl: 'img/banner3_narrow.jpg',
-      phoneImageWidth: 488,
-      phoneImageHeight: 200,
-    },
-    {
-      imageUrl: 'img/banner4.jpg',
-      imageWidth: 1011,
-      imageHeight: 450,
-      imageAlternateText: 'Апібудинки виросли',
-      phoneImageUrl: 'img/banner4_narrow.jpg',
-      phoneImageWidth: 449,
-      phoneImageHeight: 200,
-    },
-    {
-      imageUrl: 'img/banner5.jpg',
-      imageWidth: 600,
-      imageHeight: 450,
-      imageAlternateText: 'Підйом апібудинків до сніданку',
-      phoneImageUrl: 'img/banner5_narrow.jpg',
-      phoneImageWidth: 267,
-      phoneImageHeight: 200,
+      text: 'Сон на вуликах не є панацеєю від усіх хвороб, проте має значний вплив у лікуванні дихальної системи, суглобів і опорно рухового апарату, нервової та психічної систем. Комплексний вплив всіх елементів апітерапії має накопичувальний ефект, тобто щоб отримати відчутний результат потрібно спати на вулику принаймні 10 ночей.',
+      imageUrl: 'content3.jpg',
+      imageDescription: 'Апібудинки як місце для усамітнення',
     },
   ];
 };
 
-const banners = getBanners();
+const getAsideItems = function getAsideItems(): Array<AsideItem> {
+  return [
+    {
+      text: 'Продаж та дегустація меду, крем меду та медових десертів. Також в нас широкий вибір подарункових наборів  на різний бюджет.',
+      imageUrl: 'aside1.jpg',
+      imageDescription: 'Медові вироби і ціни приємно вас здивують',
+    },
+    {
+      text:
+        'Екскурсії для дітей та дорослих: Ви познайомитеся з особливостями життєдіяльності бджолиної сім"ї, з інструментами пасічника, побачите як викачують мед та відвідаєте музей бджільництва та старожитностей. Музей розташований на двох поверхах і має чимало тематичних відділів: інструменти пасічника, вулики, медогонки, експонати побуту попередніх поколінь, вишиванки та вишиті картини, колекція вишитих рушників та багато іншого.\n' +
+        '\n' +
+        '  У вартість екскурсії входить дегустація меду з травяним чаєм і печивом. ',
+      imageUrl: 'aside2.jpg',
+      imageDescription: 'Поповніть свої знання про бджілок і не тільки...',
+    },
+  ];
+};
 
-const fetchBanners = async (
+const fetchContentItems = async (
   abortSignal?: AbortSignal
-): Promise<Array<BannerDTO>> => {
-  return new Promise<Array<BannerDTO>>((resolve) => {
+): Promise<Array<ContentItemDTO>> => {
+  return new Promise<Array<ContentItemDTO>>((resolve) => {
     setTimeout(() => {
-      resolve(banners);
+      resolve(getContentItems());
+    }, 4000);
+  });
+};
+
+const fetchAsideItems = async (
+  abortSignal?: AbortSignal
+): Promise<Array<AsideItem>> => {
+  return new Promise<Array<AsideItem>>((resolve) => {
+    setTimeout(() => {
+      resolve(getAsideItems());
     }, 4000);
   });
 };
 
 let intervalId;
-let scrollY = 0;
+const countBanners = 5;
 
 export default function App() {
-  const banners = useAsync(fetchBanners, []);
+  const [navIndex, setNavIndex] = useState(0);
   const [bannerState, setBannerState] = useState<BannerState>({
     currentItemIndex: 0,
     autoMoveEnabled: true,
     resumeAutoMove: false,
     moveDirection: 'right',
   });
-  const [navIndex, setNavIndex] = useState(0);
+  const contentItems = useAsync(fetchContentItems, []);
+  const asideItems = useAsync(fetchAsideItems, []);
 
   useEffect(() => {
     if (bannerState.autoMoveEnabled) {
@@ -112,22 +112,22 @@ export default function App() {
     };
   }, [bannerState]);
 
-  if (banners.loading) {
+  if (contentItems.loading) {
     return 'Data loading... Please, wait...';
   }
-  if (banners.error) {
-    return `Error occurred: ${banners.error.message}`;
+  if (contentItems.error) {
+    return `Error occurred: ${contentItems.error.message}`;
   }
 
   return (
-    <div>
+    <>
       <header>
         <Navigation navIndex={navIndex} onNavIndexChanged={setNavIndex} />
       </header>
-      <main>
+      <div className="main">
         <Banner
           bannerState={bannerState}
-          banners={banners.result}
+          countBanners={countBanners}
           onManualMove={() => {
             const moveDirection: MoveDirection =
               bannerState.moveDirection === 'right' ? 'left' : 'right';
@@ -138,27 +138,16 @@ export default function App() {
             });
           }}
         />
-        <article>
-          <h2>Апітерапія - нове слово в сфері оздоровлення</h2>
-          <p>
-            Монотонне гудіння бджіл та їх природнє тепло розслаблююче діють на
-            весь організм людини, і за рахунок цього всього за чотири години Ви
-            повністю відпочинете.
-          </p>
-          <p>Запрошуємо відчути на собі цілющу дію бджолиних сімей!</p>
-        </article>
-        <aside>
-          <h2>А що крім апітерапії?</h2>
-          <p>
-            Михайлівський апітерапевтичний оздоровчий комплекс пропонує також:
-          </p>
-        </aside>
-      </main>
+        <ContentItems contentItems={contentItems.result} />
+
+        <Aside asideItems={asideItems.result} />
+      </div>
       <footer>
         <h2>Михайлівський апітерапевтичний оздоровчий центр запрошує Вас</h2>
+        <hr />
         <ContactUs />
       </footer>
-    </div>
+    </>
   );
 }
 
@@ -166,7 +155,7 @@ function doMovePrevious(currentItemIndex, onItemChanged) {
   clearInterval(intervalId);
   intervalId = setInterval(() => {
     if (currentItemIndex === 0) {
-      currentItemIndex = banners.length - 1;
+      currentItemIndex = countBanners - 1;
     } else {
       currentItemIndex--;
     }
@@ -177,7 +166,7 @@ function doMovePrevious(currentItemIndex, onItemChanged) {
 function doMoveNext(currentItemIndex, onItemChanged) {
   clearInterval(intervalId);
   intervalId = setInterval(() => {
-    if (currentItemIndex === banners.length - 1) {
+    if (currentItemIndex === countBanners - 1) {
       currentItemIndex = 0;
     } else {
       currentItemIndex++;

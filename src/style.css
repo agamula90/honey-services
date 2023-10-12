@@ -4,10 +4,6 @@
 }
 
 /*
-TODO optimise for mobile + laptops + add other content
-*/
-
-/*
  * resets
  */
 
@@ -23,10 +19,6 @@ h1 {
 
 h2 {
     margin: 0;
-}
-
-article {
-    margin: 2rem 0 0 0;
 }
 
 /*
@@ -88,27 +80,6 @@ h1 {
 
 h1 + p {
     margin: 0.6rem 0 0 0;
-}
-
-.content-item img {
-    width: 150px;
-    height: 100px;
-    padding: 10px;
-    display: inline-block;
-}
-
-/*
-TODO maybe for large display
-.content-item {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-}*/
-
-.content-item p {
-    display: inline-block;
-    flex: 1;
-    text-indent: 20px;
 }
 
 h2 {

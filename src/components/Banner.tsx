@@ -1,14 +1,5 @@
-import React, { useState } from 'react';
-
-export type BannerDTO = {
-  imageUrl: string;
-  imageWidth: number;
-  imageHeight: number;
-  phoneImageUrl: string;
-  phoneImageWidth: number;
-  phoneImageHeight: number;
-  imageAlternateText: string;
-};
+import React from 'react';
+import getImagePath from './../utils/imageUtils'
 
 export type MoveDirection = 'left' | 'right';
 export type BannerState = {
@@ -20,18 +11,18 @@ export type BannerState = {
 
 export default function Banner({
   bannerState,
-  banners,
+  countBanners,
   onManualMove,
 }: {
   bannerState: BannerState;
-  banners: Array<BannerDTO>;
-  onManualMove;
+  countBanners: number;
+  onManualMove: Function;
 }) {
   const firstItemIndex = bannerState.currentItemIndex;
   const moveNext = bannerState.moveDirection == 'right'
   const secondItemIndex = moveNext
-    ? (bannerState.currentItemIndex + 1 + banners.length) % banners.length
-    : (bannerState.currentItemIndex - 1 + banners.length) % banners.length;
+    ? (bannerState.currentItemIndex + 1 + countBanners) % countBanners
+    : (bannerState.currentItemIndex - 1 + countBanners) % countBanners;
   const firstItemPath = getBannerPathByIndex(firstItemIndex);
   const secondItemPath = getBannerPathByIndex(secondItemIndex);
   const firstItemBackground = `url(${firstItemPath}) no-repeat 50%/100%`;
@@ -74,7 +65,5 @@ export default function Banner({
 
 function getBannerPathByIndex(index) {
   const isSmallScreen = window.innerWidth < 450;
-  const s3Prefix =
-    'https://elasticbeanstalk-eu-central-1-306070261283.s3.eu-central-1.amazonaws.com/public';
-  return `${s3Prefix}/banner${index + 1}${isSmallScreen ? '_narrow' : ''}.jpg`;
+  return getImagePath(`banner${index + 1}${isSmallScreen ? '_narrow' : ''}.jpg`);
 }
