@@ -1,15 +1,6 @@
 import React from 'react';
 
-export default function Navigation({ navIndex, onNavIndexChanged }) {
-  const navItems = [
-    'Головна',
-    'Новини',
-    'Продукція',
-    'Послуги',
-    'Про нас',
-    'Контакти',
-  ];
-
+export default function Navigation({ navItems, navIndex, onNavIndexChanged }) {
   return (
     <nav>
       {navItems.map((item, index) => {

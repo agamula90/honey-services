@@ -1,5 +1,5 @@
 import React from 'react';
-import getImagePath from "./../utils/imageUtils";
+import {getImagePath} from "../../utilities";
 
 export type ContentItemDTO = {
   text: string;

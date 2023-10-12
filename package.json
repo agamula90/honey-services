@@ -4,7 +4,7 @@
   "description": "Honey services",
   "main": "index.js",
   "scripts": {
-    "run":  "npx parcel src/index.html",
+    "run": "npx parcel src/index.html",
     "build": "parcel build src/index.html"
   },
   "repository": {
@@ -36,6 +36,8 @@
     "react": "^18.2.0",
     "react-async-hook": "^4.0.0",
     "react-dom": "^18.2.0",
-    "serve-static": "^1.15.0"
+    "serve-static": "^1.15.0",
+    "utilities": "^1.0.6",
+    "utils": "^0.3.1"
   }
 }

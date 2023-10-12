@@ -1,7 +1,10 @@
 import React from "react";
 
 export default function ContactUs() {
-    return <address>
+    return <footer>
+        <h1>Михайлівський апітерапевтичний оздоровчий центр запрошує Вас</h1>
+        <hr />
+        <address>
         Наша адреса: <strong>Чернівецька обл., Глибоцький р-н, с Михайлівка, вул Шевченка 6.</strong>
         <br />
         Контактні дані:
@@ -43,4 +46,5 @@ export default function ContactUs() {
                 </a>
             </p>
     </address>
+    </footer>
 }
