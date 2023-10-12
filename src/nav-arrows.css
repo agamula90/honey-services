@@ -2,12 +2,13 @@
     position: absolute;
     display: none;
     z-index: 1;
-    height: 30px;
     background: #00000088 no-repeat;
     border-radius: 5px;
     padding: 8px 20px 12px 20px;
     color: white;
-    font-size: 35px;
+    font-size: 30px;
+    height: 35px;
+    line-height: 35px;
     font-family: sans-serif;
 }
 
