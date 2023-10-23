@@ -1,13 +1,20 @@
 import {useAsync} from "react-async-hook";
 import {fetchAsideItems, fetchContentItems} from "./mocks";
-import Navigation from "../Navigation";
-import Banner, { BannerState, MoveDirection } from './Banner';
+import Banner, {BannerState, MoveDirection} from './Banner';
 import ContentItems from "./ContentItems";
 import Aside from "./Aside";
 import ContactUs from "../ContactUs";
 import React, {useEffect, useState} from "react";
+import "../style.css"
+import "../banner.css"
+import "../layout.css"
+import "../nav-arrows.css"
+import styles from "./main.module.css"
+import {buildStyles, CircularProgressbar} from "react-circular-progressbar";
+import DefaultProgressBar from "../DefaultProgressBar";
 
-let intervalId;
+let intervalId: NodeJS.Timeout;
+let progressIntervalId: NodeJS.Timeout;
 const countBanners = 5;
 export default function MainPage() {
     const [bannerState, setBannerState] = useState<BannerState>({
@@ -22,11 +29,11 @@ export default function MainPage() {
     useEffect(() => {
         if (bannerState.autoMoveEnabled) {
             if (bannerState.moveDirection == 'right') {
-                doMoveNext(bannerState.currentItemIndex, (index) => {
+                doMoveNext(bannerState.currentItemIndex, (index: number) => {
                     setBannerState({...bannerState, currentItemIndex: index});
                 });
             } else {
-                doMovePrevious(bannerState.currentItemIndex, (index) => {
+                doMovePrevious(bannerState.currentItemIndex, (index: number) => {
                     setBannerState({...bannerState, currentItemIndex: index});
                 });
             }
@@ -53,7 +60,7 @@ export default function MainPage() {
     }, [bannerState]);
 
     if (contentItems.loading) {
-        return 'Data loading... Please, wait...';
+        return <DefaultProgressBar />
     }
     if (contentItems.error) {
         return `Error occurred: ${contentItems.error.message}`;
@@ -61,7 +68,7 @@ export default function MainPage() {
 
     return (
         <>
-            <div className="main">
+            <main className={styles.main}>
                 <Banner
                     bannerState={bannerState}
                     countBanners={countBanners}
@@ -78,13 +85,13 @@ export default function MainPage() {
                 <ContentItems contentItems={contentItems.result}/>
 
                 <Aside asideItems={asideItems.result}/>
-            </div>
+            </main>
             <ContactUs/>
         </>
     );
 }
 
-function doMovePrevious(currentItemIndex, onItemChanged) {
+function doMovePrevious(currentItemIndex: number, onItemChanged: Function) {
     clearInterval(intervalId);
     intervalId = setInterval(() => {
         if (currentItemIndex === 0) {
@@ -96,7 +103,7 @@ function doMovePrevious(currentItemIndex, onItemChanged) {
     }, 3000);
 }
 
-function doMoveNext(currentItemIndex, onItemChanged) {
+function doMoveNext(currentItemIndex: number, onItemChanged: Function) {
     clearInterval(intervalId);
     intervalId = setInterval(() => {
         if (currentItemIndex === countBanners - 1) {

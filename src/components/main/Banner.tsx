@@ -33,7 +33,7 @@ export default function Banner({
       <div
         key={firstItemIndex}
         style={{ background: firstItemBackground }}
-        className="slider-image active"
+        className="active slider-image"
       ></div>
       <div
         key={secondItemIndex}
@@ -63,7 +63,7 @@ export default function Banner({
   );
 }
 
-function getBannerPathByIndex(index) {
+function getBannerPathByIndex(index: number) {
   const isSmallScreen = window.innerWidth < 450;
   return getImagePath(`banner${index + 1}${isSmallScreen ? '_narrow' : ''}.jpg`);
 }

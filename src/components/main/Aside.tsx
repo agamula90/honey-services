@@ -1,5 +1,5 @@
 import React from 'react';
-import {getImagePath} from "../../utilities";
+import {getImagePath} from '../../utilities';
 
 export type AsideItem = {
   text: string;

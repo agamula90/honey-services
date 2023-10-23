@@ -1,0 +1,48 @@
+#slider {
+    position: relative;
+    height: 450px;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+#slider section {
+    position: absolute;
+    background: #000000aa;
+    color: white;
+    padding: 20px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    z-index: 1;
+}
+
+#slider > .slider-image,
+#slider > .slider-image {
+    opacity: 0;
+    transition: opacity 3s;
+    width: 300px;
+    height: 450px;
+}
+
+#slider > .slider-image.active,
+#slider > .slider-image.active {
+    opacity: 1;
+}
+
+/* from 360 to 450px*/
+@media screen and (min-width: 450px){
+    #slider {
+        height: 450px;
+        max-width: 1000px;
+    }
+
+    #slider > .slider-image,
+    #slider > .slider-image {
+        height: 450px;
+        width: 1000px;
+    }
+}
+
+/*
+grid for other content, arrows for wide screen
+*/

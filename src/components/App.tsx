@@ -1,11 +1,5 @@
 import Navigation from './Navigation';
-import Banner, { BannerState, MoveDirection } from './main/Banner';
-import ContactUs from './ContactUs';
-import React, { useEffect, useState } from 'react';
-import { useAsync } from 'react-async-hook';
-import ContentItems from './main/ContentItems';
-import Aside from './main/Aside';
-import { fetchAsideItems, fetchContentItems } from "./main/mocks";
+import React, { useState } from 'react';
 import MainPage from "./main/MainPage";
 import NewsPage from "./news/NewsPage";
 import ProductsPage from "./products/ProductsPage";

@@ -1,0 +1,66 @@
+
+.aside > span {
+    position: relative;
+    display: block;
+    height: 30px;
+    line-height: 1.5;
+    padding: 7px 27px 7px 7px;
+    background: #96ca2d;
+}
+
+.aside > span:after {
+    content: "";
+    right: 0;
+    top: 0;
+    position: absolute;
+    border-bottom: 20px solid transparent;
+    border-right: 20px solid #FFFFFF;
+    border-top: 20px solid transparent;
+}
+
+.ul {
+    padding-inline: 0;
+}
+
+.li {
+    list-style-type: none;
+}
+
+.aside .li a {
+    display: block;
+    text-decoration: none;
+    color: #81ad27;
+}
+
+.aside .li a:link {
+    color: #81ad27;
+}
+
+.aside .li a:hover {
+    color: #444444;
+}
+
+.main {
+    grid-template-columns: 3fr 1fr;
+    display: grid;
+    margin: 0 20px;
+}
+
+.img + .p:first-line {
+    text-indent: 20px;
+}
+
+.centeredImage {
+    margin-inline: auto;
+    display: block;
+}
+
+.float {
+    float: left;
+    padding-inline-end: 10px;
+    padding-block: 20px;
+}
+
+.p {
+    clear: both;
+}
