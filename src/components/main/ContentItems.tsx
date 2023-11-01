@@ -1,16 +1,11 @@
 import React from 'react';
 import {getImagePath} from "../../utilities";
-
-export type ContentItemDTO = {
-  text: string;
-  imageUrl: string;
-  imageDescription: string;
-};
+import {ContentItem} from "./mocks";
 
 export default function ContentItems({
   contentItems,
 }: {
-  contentItems: Array<ContentItemDTO>;
+  contentItems: Array<ContentItem>;
 }) {
   const contenItemsRenderable = contentItems.map((item, index) => {
     return (

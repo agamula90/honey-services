@@ -18,6 +18,9 @@ const configuration: webpack.Configuration = {
     },
     resolve: {
         extensions: [ '.js', '.tsx', '.ts', ".css"],
+        alias: {
+          '@mui/styled-engine': '@mui/styled-engine-sc'
+        },
     },
     plugins: [
         new htmlWebPackPlugin({

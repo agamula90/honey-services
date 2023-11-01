@@ -1,7 +1,16 @@
-import {ContentItemDTO} from "./ContentItems";
-import {AsideItem} from "./Aside";
+export type ContentItem = {
+    text: string;
+    imageUrl: string;
+    imageDescription: string;
+};
 
-function getContentItems(): Array<ContentItemDTO> {
+export type AsideItem = {
+    text: string;
+    imageUrl: string;
+    imageDescription: string;
+};
+
+function getContentItems(): Array<ContentItem> {
     return [
         {
             text: 'Що ж таке апітерапія? Дослівно апітерапія означає лікування продуктами бджільництва. Тобто це не тільки сон на вуликах, а ще й лікування прополісом, пергою, маточним молочком, бджолиним підмором тощо.',
@@ -40,8 +49,8 @@ function getAsideItems(): Array<AsideItem> {
     ];
 }
 
-export async function fetchContentItems(abortSignal?: AbortSignal): Promise<Array<ContentItemDTO>> {
-    return new Promise<Array<ContentItemDTO>>((resolve) => {
+export async function fetchContentItems(abortSignal?: AbortSignal): Promise<Array<ContentItem>> {
+    return new Promise<Array<ContentItem>>((resolve) => {
         setTimeout(() => {
             resolve(getContentItems());
         }, 4000);

@@ -1,31 +1,39 @@
 import React from 'react';
-import styles from "./news.module.css";
+import styles from './news.module.css';
+import { ArticleHref } from './mocks';
 
-export type ArticleHref = {
-    href: string;
-    title: string
-}
+export default function Articles({
+  articles,
+  forCuriousClick,
+}: {
+  articles: Array<ArticleHref>;
+  forCuriousClick: Function;
+}) {
+  return (
+    <aside className={styles.aside}>
+      <a
+        href=""
+        onClick={(e) => {
+          e.preventDefault();
+          forCuriousClick();
+        }}
+        className={styles.forCuriousLink}
+        style={{display: "block"}}
+      >
+        Для допитливих
+      </a>
 
-export default function Articles(
-    {
-        articles
-    }: {
-        articles: Array<ArticleHref>;
-    }
-) {
-    return (
-        <aside className={styles.aside}>
-            <span>Що пишуть про нас</span>
-            <ul className={styles.ul}>
-                {articles.map((article, index) => {
-                    return (
-                        <li className={styles.li} key={article.href}>
-                            <a href={article.href}>{article.title}</a>
-                        </li>
-                    );
-                })}
-            </ul>
-            <span>Що пишуть про нас</span>
-        </aside>
-    );
+      <span>Що пишуть про нас</span>
+      <ul className={styles.ul}>
+        {articles.map((article, index) => {
+          return (
+            <li className={styles.li} key={article.href}>
+              <a href={article.href}>{article.title}</a>
+            </li>
+          );
+        })}
+      </ul>
+      <span>Що пишуть про нас</span>
+    </aside>
+  );
 }

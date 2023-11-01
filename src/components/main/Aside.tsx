@@ -1,11 +1,6 @@
 import React from 'react';
 import {getImagePath} from '../../utilities';
-
-export type AsideItem = {
-  text: string;
-  imageUrl: string;
-  imageDescription: string;
-};
+import {AsideItem} from "./mocks";
 
 export default function Aside({
   asideItems,

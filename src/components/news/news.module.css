@@ -1,3 +1,7 @@
+.aside {
+    padding: 20px;
+    position: relative;
+}
 
 .aside > span {
     position: relative;
@@ -6,6 +10,19 @@
     line-height: 1.5;
     padding: 7px 27px 7px 7px;
     background: #96ca2d;
+}
+
+.h1 + p {
+    margin: 10px 10px 10px;
+    text-indent: 20px;
+}
+
+/*
+this last div is simulated p, because p doesn't support block quotes
+ */
+.lastParagraph {
+    text-indent: 20px;
+    margin: 10px 10px 0 10px;
 }
 
 .aside > span:after {
@@ -26,27 +43,21 @@
     list-style-type: none;
 }
 
-.aside .li a {
+.aside li a {
     display: block;
     text-decoration: none;
     color: #81ad27;
 }
 
-.aside .li a:link {
+.aside li a:link {
     color: #81ad27;
 }
 
-.aside .li a:hover {
+.aside li a:hover {
     color: #444444;
 }
 
-.main {
-    grid-template-columns: 3fr 1fr;
-    display: grid;
-    margin: 0 20px;
-}
-
-.img + .p:first-line {
+.img + p:first-line {
     text-indent: 20px;
 }
 
@@ -55,12 +66,83 @@
     display: block;
 }
 
+.float + p {
+    text-indent: 20px;
+    padding-block-start: 20px;
+}
+
+p {
+    padding-block-start: 20px;
+}
+
 .float {
     float: left;
-    padding-inline-end: 10px;
+    padding-inline: 10px;
     padding-block: 20px;
 }
 
 .p {
     clear: both;
+}
+
+.clearFloat {
+    clear: both;
+}
+
+.textIndent {
+    text-indent: 20px;
+    padding-block-start: 20px;
+}
+
+.forCuriousLink {
+    padding-block: 15px;
+    text-decoration: none;
+    color: #81ad27;
+}
+
+.forCuriousLink:link {
+    color: #81ad27;
+}
+
+.forCuriousLink:hover {
+    color: #444444;
+}
+
+.forCurious {
+    position: absolute;
+    background: white;
+    border: 1px solid #81ad27;
+    border-radius: 5px;
+    left: 30px;
+    right: 30px;
+    bottom: 30px;
+    width: calc(100% - 80px);
+    height: 600px;
+    overflow: auto;
+    padding: 10px;
+}
+
+.forCuriousClose {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    text-decoration: none;
+}
+
+.forCuriousCloseContainer {
+    height: 30px;
+}
+
+
+@media screen and (min-width: 750px) {
+    .main {
+        grid-template-columns: 3fr 1fr;
+        display: grid;
+        margin: 0 20px;
+    }
+
+    .h1 + p {
+        margin: 10px 0 0 0;
+        padding-block-start: 0;
+    }
 }
