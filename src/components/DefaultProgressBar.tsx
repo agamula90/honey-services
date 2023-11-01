@@ -25,7 +25,7 @@ export default function DefaultProgressBar() {
         <CircularProgressbar value={progress} styles={
             buildStyles({
                 strokeLinecap: "butt",
-                pathColor: `var(--link-color)`,
+                pathColor: `var(--nav-color)`,
                 backgroundColor: "red"
             })
         }/>

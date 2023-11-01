@@ -1,7 +1,8 @@
 :root {
     --primary-color: black;
     --secondary-color: white;
-    --link-color: #96ca2d
+    --nav-color: #96ca2d;
+    --link-color: green;
 }
 
 /*
@@ -100,10 +101,21 @@ section + p:first-of-type {
 
 a[href^='tel'] {
     text-decoration: none;
+    color: var(--link-color);
 }
 
 a[href^='tel']::before {
     content: '📞 ';
+}
+
+a[href^='mailto'] {
+    text-decoration: none;
+    color: var(--link-color);
+}
+
+a[href^="https://maps.app.goo.gl"] {
+    text-decoration: none;
+    color: var(--link-color);
 }
 
 section + section {

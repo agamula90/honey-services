@@ -1,0 +1,27 @@
+.leftFloat {
+    display: block;
+    width: 400px;
+    height: auto;
+    padding: 10px;
+}
+
+.rightFloat {
+    width: 560px;
+    display: block;
+    height: auto;
+    padding: 10px;
+}
+
+@media screen and (min-width: 750px) {
+    .clearFloat {
+        clear: both;
+    }
+
+    .leftFloat {
+        float: left;
+    }
+
+    .rightFloat {
+        float: right;
+    }
+}
