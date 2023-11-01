@@ -3,14 +3,6 @@ export type ArticleHref = {
     title: string
 }
 
-export type ArticleItem = {
-    createdAt: Date;
-    text: string;
-    title: string;
-    id: number;
-    image: string;
-};
-
 export function getArticleHrefs(): Array<ArticleHref> {
     return [
         {

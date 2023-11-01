@@ -1,0 +1,36 @@
+.services {
+    margin: 0 20px;
+}
+
+.services {
+    margin-top: 1em;
+    margin-bottom: 0.3em;
+}
+
+.services img {
+    width: 100%;
+}
+
+@media screen and (min-width: 750px) {
+    .services {
+        grid-template-areas:
+            "a b"
+            "a b"
+            "c c";
+        grid-template-columns: 1fr 1fr;
+        display: grid;
+        gap: 10px;
+    }
+
+    .services *:nth-child(1) {
+        grid-area: a;
+    }
+
+    .services *:nth-child(2) {
+        grid-area: b;
+    }
+
+    .services *:nth-child(3) {
+        grid-area: c;
+    }
+}
