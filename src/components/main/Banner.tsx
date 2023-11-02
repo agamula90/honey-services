@@ -4,8 +4,6 @@ import { getImagePath } from "../../utilities";
 export type MoveDirection = 'left' | 'right';
 export type BannerState = {
   currentItemIndex: number;
-  resumeAutoMove: boolean,
-  autoMoveEnabled: boolean;
   moveDirection: MoveDirection;
 };
 
