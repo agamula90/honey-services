@@ -1,9 +1,8 @@
-import * as webpack from "webpack";
 import merge from "webpack-merge";
 
 import webPackConfig from "./webpack.config";
 
-const configuration = merge<webpack.Configuration>(webPackConfig, {
+const configuration = merge(webPackConfig, {
     mode: "development",
     entry: './src/index.tsx',
 })

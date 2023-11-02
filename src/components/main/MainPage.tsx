@@ -1,5 +1,5 @@
 import {useAsync} from "react-async-hook";
-import {fetchAsideItems, fetchContentItems} from "./mocks";
+import {AsideItem, ContentItem, fetchAsideItems, fetchContentItems} from "./mocks";
 import Banner, {BannerState, MoveDirection} from './Banner';
 import ContentItems from "./ContentItems";
 import Aside from "./Aside";
@@ -10,11 +10,10 @@ import "../banner.css"
 import "../layout.css"
 import "../nav-arrows.css"
 import styles from "./main.module.css"
-import {buildStyles, CircularProgressbar} from "react-circular-progressbar";
 import DefaultProgressBar from "../DefaultProgressBar";
 
-let intervalId: NodeJS.Timeout;
-let progressIntervalId: NodeJS.Timeout;
+let intervalId: NodeJS.Timeout | null;
+
 const countBanners = 5;
 export default function MainPage() {
     const [bannerState, setBannerState] = useState<BannerState>({
@@ -24,7 +23,7 @@ export default function MainPage() {
         moveDirection: 'right',
     });
     const contentItems = useAsync(fetchContentItems, []);
-    const asideItems = useAsync(fetchAsideItems, []);
+    const asideItems = useAsync(fetchAsideItems, []).result as AsideItem[];
 
     useEffect(() => {
         if (bannerState.autoMoveEnabled) {
@@ -53,8 +52,10 @@ export default function MainPage() {
         };
         window.addEventListener('scroll', handleBannerAutoMove);
         return () => {
-            clearInterval(intervalId);
-            intervalId = null;
+            if (intervalId) {
+                clearInterval(intervalId);
+                intervalId = null;
+            }
             window.removeEventListener('scroll', handleBannerAutoMove);
         };
     }, [bannerState]);
@@ -82,9 +83,8 @@ export default function MainPage() {
                         });
                     }}
                 />
-                <ContentItems contentItems={contentItems.result}/>
-
-                <Aside asideItems={asideItems.result}/>
+                <ContentItems contentItems={contentItems.result as ContentItem[]}/>
+                <Aside asideItems={asideItems}/>
             </main>
             <ContactUs/>
         </>
@@ -92,7 +92,9 @@ export default function MainPage() {
 }
 
 function doMovePrevious(currentItemIndex: number, onItemChanged: Function) {
-    clearInterval(intervalId);
+    if (intervalId) {
+        clearInterval(intervalId);
+    }
     intervalId = setInterval(() => {
         if (currentItemIndex === 0) {
             currentItemIndex = countBanners - 1;
@@ -104,7 +106,9 @@ function doMovePrevious(currentItemIndex: number, onItemChanged: Function) {
 }
 
 function doMoveNext(currentItemIndex: number, onItemChanged: Function) {
-    clearInterval(intervalId);
+    if (intervalId) {
+        clearInterval(intervalId);
+    }
     intervalId = setInterval(() => {
         if (currentItemIndex === countBanners - 1) {
             currentItemIndex = 0;

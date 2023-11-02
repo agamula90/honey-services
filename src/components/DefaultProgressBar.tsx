@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {buildStyles, CircularProgressbar} from "react-circular-progressbar";
 
-let progressIntervalId: NodeJS.Timeout;
+let progressIntervalId: NodeJS.Timeout | null;
 
 export default function DefaultProgressBar() {
     const [progress, setProgress] = useState(0);
@@ -16,8 +16,10 @@ export default function DefaultProgressBar() {
         }, 200);
 
         return () => {
-            clearInterval(progressIntervalId);
-            progressIntervalId = null;
+            if (progressIntervalId) {
+                clearInterval(progressIntervalId);
+                progressIntervalId = null;
+            }
         }
     }, [progress]);
 
