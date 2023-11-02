@@ -26,7 +26,8 @@ const configuration: webpack.Configuration = {
         new htmlWebPackPlugin({
             template: "./src/index.html"
         })
-    ]
+    ],
+    entry: './src/index.tsx'
 }
 
 export default configuration;
