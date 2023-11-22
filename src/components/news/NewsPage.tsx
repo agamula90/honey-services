@@ -1,14 +1,24 @@
 import React, { useState } from 'react';
-import { getArticleHrefs } from './mocks';
+import {articlesQuery} from './mocks';
 import Articles from './Articles';
 import styles from './news.module.css';
 import '../layout.css';
 import { getImagePath } from '../../utilities';
 import ForCurious from './ForCurious';
+import {useQuery} from "@apollo/client";
+import DefaultProgressBar from "../DefaultProgressBar";
 
 export default function NewsPage() {
-  const articles = getArticleHrefs();
+  const articles = useQuery(articlesQuery);
   const [forCuriousSectionShown, setForCuriousSectionShown] = useState(false);
+
+  if (articles.loading) {
+    return <DefaultProgressBar />;
+  }
+
+  if (articles.error) {
+    return `Error occurred: ${articles.error.message}`;
+  }
 
   const mainContent = (
     <>
@@ -145,7 +155,7 @@ export default function NewsPage() {
         </div>
       </section>
       <Articles
-        articles={articles}
+        articles={articles.data.articles}
         forCuriousClick={() => {
           setForCuriousSectionShown(true);
         }}
