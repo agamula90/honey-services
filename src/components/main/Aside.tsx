@@ -20,7 +20,7 @@ export default function Aside({
               <article>
                 <p>{item.text}</p>
                 <img
-                  src={getImagePath(item.imageUrl)}
+                  src={item.imageUrl}
                   alt={item.imageDescription}
                   style={{ maxWidth: '100%', display: 'block' }}
                 />

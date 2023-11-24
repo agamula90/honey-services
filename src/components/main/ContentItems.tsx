@@ -1,5 +1,4 @@
 import React from 'react';
-import {getImagePath} from "../../utilities";
 import {ContentItem} from "./mocks";
 
 export default function ContentItems({
@@ -12,7 +11,7 @@ export default function ContentItems({
       <article key={index}>
         <p>{item.text}</p>
         <img
-          src={getImagePath(item.imageUrl)}
+          src={item.imageUrl}
           alt={item.imageDescription}
           style={{maxWidth: "100%", display: "block"}}
         />

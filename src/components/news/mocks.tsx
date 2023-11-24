@@ -11,5 +11,4 @@ export const articlesQuery = gql(`
             title
             href
         }
-    }`)
-
+    }`);

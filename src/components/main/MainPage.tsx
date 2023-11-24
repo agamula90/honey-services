@@ -1,10 +1,4 @@
-import { useAsync } from 'react-async-hook';
-import {
-  AsideItem,
-  ContentItem,
-  fetchAsideItems,
-  fetchContentItems,
-} from './mocks';
+import { contentItemsQuery, supplementaryContentItemsQuery } from './mocks';
 import Banner, { BannerState, MoveDirection } from './Banner';
 import ContentItems from './ContentItems';
 import Aside from './Aside';
@@ -16,6 +10,7 @@ import '../layout.css';
 import '../nav-arrows.css';
 import styles from './main.module.css';
 import DefaultProgressBar from '../DefaultProgressBar';
+import {useQueryWithCache} from "../../utilities";
 
 let intervalId: NodeJS.Timeout | null;
 
@@ -25,8 +20,8 @@ export default function MainPage() {
     currentItemIndex: 0,
     moveDirection: 'right',
   });
-  const contentItems = useAsync(fetchContentItems, []);
-  const asideItems = useAsync(fetchAsideItems, []).result as AsideItem[];
+  const contentItems = useQueryWithCache(contentItemsQuery);
+  const asideItems = useQueryWithCache(supplementaryContentItemsQuery);
 
   useEffect(() => {
     intervalId = setInterval(() => {
@@ -52,11 +47,14 @@ export default function MainPage() {
     };
   }, [bannerState]);
 
-  if (contentItems.loading) {
+  if (contentItems.loading || asideItems.loading) {
     return <DefaultProgressBar />;
   }
   if (contentItems.error) {
     return `Error occurred: ${contentItems.error.message}`;
+  }
+  if (asideItems.error) {
+    return `Error occurred: ${asideItems.error.message}`;
   }
 
   return (
@@ -74,8 +72,8 @@ export default function MainPage() {
             });
           }}
         />
-        <ContentItems contentItems={contentItems.result as ContentItem[]} />
-        <Aside asideItems={asideItems} />
+        <ContentItems contentItems={contentItems.data} />
+        <Aside asideItems={asideItems.data} />
       </main>
       <ContactUs />
     </>
