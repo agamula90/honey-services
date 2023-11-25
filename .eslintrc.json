@@ -3,16 +3,24 @@
     "es6": true,
     "browser": true
   },
-  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  //"parser": "@typescript-eslint/parser",
+  //root: true,
+  "extends": ["eslint:recommended", "plugin:react/recommended", "plugin:@typescript-eslint/recommended-type-checked", "plugin:@typescript-eslint/stylistic-type-checked"],
   "parserOptions": {
     "ecmaVersion": 6,
+    "project": ["tsconfig.json"],
     "sourceType": "module",
     "ecmaFeatures": {
       "jsx": true
     }
   },
-  "plugins": ["react"],
+  "plugins": [
+    "react",
+    "@typescript-eslint"
+  ],
   "rules": {
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": "error",
     "semi": "error",
     "no-console": 0,
     "react/jsx-uses-vars": "error"

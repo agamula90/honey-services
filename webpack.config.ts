@@ -1,5 +1,5 @@
 import * as webpack from "webpack";
-const htmlWebPackPlugin = require("html-webpack-plugin");
+import htmlWebPackPlugin = require("html-webpack-plugin");
 
 const configuration: webpack.Configuration = {
     module: {
@@ -7,7 +7,10 @@ const configuration: webpack.Configuration = {
             {
                 test: /\.css$/,
                 exclude: /node_modules$/,
-                use: ['style-loader', 'css-loader']
+                use: [
+                    'style-loader',
+                    "css-loader"
+                ]
             },
             {
                 test: /\.(ts|tsx)$/,
@@ -28,6 +31,6 @@ const configuration: webpack.Configuration = {
         })
     ],
     entry: './src/index.tsx'
-}
+};
 
 export default configuration;

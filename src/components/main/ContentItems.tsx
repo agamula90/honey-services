@@ -4,7 +4,7 @@ import {ContentItem} from "./mocks";
 export default function ContentItems({
   contentItems,
 }: {
-  contentItems: Array<ContentItem>;
+  contentItems: ContentItem[];
 }) {
   const contenItemsRenderable = contentItems.map((item, index) => {
     return (

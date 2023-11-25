@@ -1,24 +1,25 @@
 import React from "react";
 import {productsQuery, Product} from "./mocks";
-import styles from "./products.module.css"
+import styles from "./products.module.css";
 import {useQueryWithCache} from "../../utilities";
 import DefaultProgressBar from "../DefaultProgressBar";
 
 export default function ProductsPage() {
-    const products = useQueryWithCache(productsQuery);
+    const products = useQueryWithCache<Product[]>(productsQuery);
 
     if (products.loading) {
         return <DefaultProgressBar />;
     }
     if (products.error) {
-        return `Error occurred: ${products.error.message}`;
+        return `Error occurred: ${products.error}`;
     }
-
-    const productsList = products.data as Array<Product>;
+    if (!products.data) {
+        return "Products not found";
+    }
 
     return <div className={styles.products}>
         {
-            productsList.map(product => <ProductItem product={product} key={product.id}/>)
+            products.data.map(product => <ProductItem product={product} key={product.id}/>)
         }
     </div>;
 }
@@ -28,13 +29,13 @@ function ProductItem({product}: { product: Product }) {
         <img src={product.imageUrl} alt=""></img> :
         <div></div>;
     const types = product.types.length ? <ul>
-        {product.types.map(type => <li>{type}</li>)}
+        {product.types.map(type => <li key={type}>{type}</li>)}
     </ul> : <div></div>;
 
     const description = product.description.length ? <>
      <hr />
      {product.description}
-    </> : <div></div>
+    </> : <div></div>;
 
     const volumes = product.volumes.join("; ");
 
@@ -44,5 +45,5 @@ function ProductItem({product}: { product: Product }) {
         {types}
         {description}
         {volumes}
-    </div>
+    </div>;
 }

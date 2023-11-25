@@ -20,44 +20,44 @@ export default function App() {
 
   const navHeader = <header>
     <Navigation navItems={navItems} navIndex={navIndex} onNavIndexChanged={setNavIndex}/>
-  </header>
+  </header>;
 
   switch (navIndex) {
     case 0: {
       return <>
         {navHeader}
         <MainPage />
-      </>
+      </>;
     }
     case 1: {
       return <>
         {navHeader}
         <NewsPage />
-      </>
+      </>;
     }
     case 2: {
       return <>
         {navHeader}
         <ProductsPage />
-      </>
+      </>;
     }
     case 3: {
       return <>
         {navHeader}
         <ServicesPage />
-      </>
+      </>;
     }
     case 4: {
       return <>
         {navHeader}
         <AboutUsPage />
-      </>
+      </>;
     }
     case 5: {
       return <>
         {navHeader}
         <ContactsPage />
-      </>
+      </>;
     }
   }
 }

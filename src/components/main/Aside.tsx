@@ -1,11 +1,10 @@
 import React from 'react';
-import {getImagePath} from '../../utilities';
 import {AsideItem} from "./mocks";
 
 export default function Aside({
   asideItems,
 }: {
-  asideItems: Array<AsideItem>;
+  asideItems: AsideItem[];
 }) {
   return (
     <aside>

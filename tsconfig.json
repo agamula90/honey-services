@@ -11,7 +11,8 @@
     "moduleResolution": "node",
     "paths": {
       "@mui/styled-engine": ["./node_modules/@mui/styled-engine-sc"]
-    }
+    },
+    "plugins": [{ "name": "typescript-plugin-css-modules" }]
   },
-  "include": ["src"]
+  "include": ["src", "webpack.config.ts", "webpack.dev.ts", "webpack.prod.ts"]
 }

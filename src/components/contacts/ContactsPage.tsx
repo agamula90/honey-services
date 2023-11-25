@@ -1,5 +1,5 @@
 import React from "react";
-import "../style.css"
+import "../style.css";
 
 export default function ContactsPage() {
     return <div>
@@ -9,5 +9,5 @@ export default function ContactsPage() {
             <strong>Електронна пошта:</strong> <a href="mailto:apiterapiiamivira@gmail.com">apiterapiiamivira@gmail.com</a> <br />
             <strong>Фізична адреса на гугл картах:</strong> <a href="https://maps.app.goo.gl/wpdtZocLAh8dAZHk8">Мивіра</a>
         </address>
-    </div>
+    </div>;
 }

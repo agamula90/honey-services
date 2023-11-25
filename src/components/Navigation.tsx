@@ -1,9 +1,9 @@
 import React from 'react';
 
 export default function Navigation({navItems, navIndex, onNavIndexChanged}: {
-    navItems: Array<String>,
+    navItems: string[],
     navIndex: number,
-    onNavIndexChanged: Function
+    onNavIndexChanged: (index: number) => void
 }) {
     return (
         <nav>
@@ -35,7 +35,7 @@ export default function Navigation({navItems, navIndex, onNavIndexChanged}: {
 function setNavIndex(
     e: React.MouseEvent,
     newNavIndex: number,
-    onNavIndexChanged: Function
+    onNavIndexChanged: (index: number) => void
 ) {
     e.preventDefault();
     onNavIndexChanged(newNavIndex);

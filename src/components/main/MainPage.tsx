@@ -1,4 +1,4 @@
-import { contentItemsQuery, supplementaryContentItemsQuery } from './mocks';
+import {AsideItem, ContentItem, contentItemsQuery, supplementaryContentItemsQuery} from './mocks';
 import Banner, { BannerState, MoveDirection } from './Banner';
 import ContentItems from './ContentItems';
 import Aside from './Aside';
@@ -20,8 +20,8 @@ export default function MainPage() {
     currentItemIndex: 0,
     moveDirection: 'right',
   });
-  const contentItems = useQueryWithCache(contentItemsQuery);
-  const asideItems = useQueryWithCache(supplementaryContentItemsQuery);
+  const contentItems = useQueryWithCache<ContentItem[]>(contentItemsQuery);
+  const asideItems = useQueryWithCache<AsideItem[]>(supplementaryContentItemsQuery);
 
   useEffect(() => {
     intervalId = setInterval(() => {
@@ -51,10 +51,16 @@ export default function MainPage() {
     return <DefaultProgressBar />;
   }
   if (contentItems.error) {
-    return `Error occurred: ${contentItems.error.message}`;
+    return `Error occurred: ${contentItems.error}`;
   }
   if (asideItems.error) {
-    return `Error occurred: ${asideItems.error.message}`;
+    return `Error occurred: ${asideItems.error}`;
+  }
+  if (!contentItems.data) {
+    return "Content items not found";
+  }
+  if (!asideItems.data) {
+    return "Aside items not found";
   }
 
   return (
@@ -80,7 +86,7 @@ export default function MainPage() {
   );
 }
 
-function doMovePrevious(currentItemIndex: number, onItemChanged: Function) {
+function doMovePrevious(currentItemIndex: number, onItemChanged: (arg: number) => void) {
   if (currentItemIndex === 0) {
     currentItemIndex = countBanners - 1;
   } else {
@@ -89,7 +95,7 @@ function doMovePrevious(currentItemIndex: number, onItemChanged: Function) {
   onItemChanged(currentItemIndex);
 }
 
-function doMoveNext(currentItemIndex: number, onItemChanged: Function) {
+function doMoveNext(currentItemIndex: number, onItemChanged: (arg: number) => void) {
   if (currentItemIndex === countBanners - 1) {
     currentItemIndex = 0;
   } else {

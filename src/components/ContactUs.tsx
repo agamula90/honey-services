@@ -46,5 +46,5 @@ export default function ContactUs() {
                 </a>
             </p>
     </address>
-    </footer>
+    </footer>;
 }

@@ -8,6 +8,6 @@ const configuration = merge(webPackConfig, {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist'),
     }
-})
+});
 
 export default configuration;

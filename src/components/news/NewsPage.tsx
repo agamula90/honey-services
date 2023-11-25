@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {articlesQuery} from './mocks';
+import {ArticleHref, articlesQuery} from './mocks';
 import Articles from './Articles';
 import styles from './news.module.css';
 import '../layout.css';
@@ -8,14 +8,17 @@ import ForCurious from './ForCurious';
 import DefaultProgressBar from "../DefaultProgressBar";
 
 export default function NewsPage() {
-  const articles = useQueryWithCache(articlesQuery);
+  const articles = useQueryWithCache<ArticleHref[]>(articlesQuery);
   const [forCuriousSectionShown, setForCuriousSectionShown] = useState(false);
 
   if (articles.loading) {
     return <DefaultProgressBar />;
   }
   if (articles.error) {
-    return `Error occurred: ${articles.error.message}`;
+    return `Error occurred: ${articles.error}`;
+  }
+  if (!articles.data) {
+    return "Articles not found";
   }
 
   const mainContent = (

@@ -1,17 +1,16 @@
 import {gql} from "@apollo/client";
 
-export type ContentItem = {
+export interface ContentItem {
     text: string;
     imageUrl: string;
     imageDescription: string;
-};
+}
 
-export type AsideItem = {
+export interface AsideItem {
     text: string;
     imageUrl: string;
     imageDescription: string;
-};
-
+}
 
 export const contentItemsQuery = gql(`
     query getContentItems {

@@ -1,4 +1,4 @@
-import {DocumentNode, QueryResult, useQuery} from "@apollo/client";
+import {DocumentNode, useQuery} from "@apollo/client";
 import {useEffect} from "react";
 
 export function getImagePath(assetImagePath: string) {
@@ -21,12 +21,12 @@ const months = [
 ];
 
 export function formatDateAsShortString(date: Date) {
-  let month = months[date.getUTCMonth()].substring(0, 3);
+  const month = months[date.getUTCMonth()].substring(0, 3);
   return `${date.getDate()} ${month}. ${date.getFullYear()}`;
 }
 
 export function formatDateAsLongString(date: Date) {
-  let month = months[date.getUTCMonth()];
+  const month = months[date.getUTCMonth()];
   let hours = date.getHours().toString();
   if (Number(hours) < 10) {
     hours = `0${hours}`;
@@ -38,7 +38,13 @@ export function formatDateAsLongString(date: Date) {
   return `${date.getDate()} ${month} ${date.getFullYear()} в ${hours}:${minutes}`;
 }
 
-export function useQueryWithCache(query: DocumentNode): QueryResult {
+export interface TargettedResult<T> {
+    data: T | undefined,
+    loading: boolean,
+    error?: string
+}
+
+export function useQueryWithCache<T>(query: DocumentNode): TargettedResult<T> {
     const queryResult = useQuery(query);
     const queryStripped = query.loc!.source.body.replace(/\s/g, "");
     const indexOfFirstCurlyBrace = queryStripped.indexOf("{");
@@ -47,15 +53,18 @@ export function useQueryWithCache(query: DocumentNode): QueryResult {
 
     useEffect(() => {
         if(!queryResult.loading && !queryResult.error) {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             queryResult.client.writeQuery({ query, data: queryResult.data});
         }
     }, [queryResult.data]);
 
     if (queryResult.loading) {
-        return queryResult;
+        return { loading: true, data: undefined};
     }
     if (queryResult.error) {
-        return queryResult;
+        return { loading: false, error: queryResult.error.message, data: undefined };
     }
-    return {...queryResult, data: queryResult.data[queryTarget] };
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    return { loading: false, data: queryResult.data[queryTarget] as T };
 }

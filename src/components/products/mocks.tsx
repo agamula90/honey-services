@@ -1,13 +1,13 @@
 import {gql} from "@apollo/client";
 
-export type Product = {
+export interface Product {
     id: number,
     title: string,
     imageUrl: string,
     description: string,
-    types: Array<string>,
-    volumes: Array<string>
-};
+    types: string[],
+    volumes: string[]
+}
 
 export const productsQuery = gql(`
     query getProducts {

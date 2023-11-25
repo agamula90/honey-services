@@ -2,10 +2,10 @@ import React from 'react';
 import { getImagePath } from "../../utilities";
 
 export type MoveDirection = 'left' | 'right';
-export type BannerState = {
+export interface BannerState {
   currentItemIndex: number;
   moveDirection: MoveDirection;
-};
+}
 
 export default function Banner({
   bannerState,
@@ -14,10 +14,10 @@ export default function Banner({
 }: {
   bannerState: BannerState;
   countBanners: number;
-  onManualMove: Function;
+  onManualMove: () => void;
 }) {
   const firstItemIndex = bannerState.currentItemIndex;
-  const moveNext = bannerState.moveDirection == 'right'
+  const moveNext = bannerState.moveDirection == 'right';
   const secondItemIndex = moveNext
     ? (bannerState.currentItemIndex + 1 + countBanners) % countBanners
     : (bannerState.currentItemIndex - 1 + countBanners) % countBanners;

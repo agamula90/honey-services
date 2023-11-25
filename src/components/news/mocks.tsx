@@ -1,6 +1,6 @@
 import {gql} from "@apollo/client";
 
-export type ArticleHref = {
+export interface ArticleHref {
     href: string;
     title: string
 }
