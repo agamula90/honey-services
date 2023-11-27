@@ -1,53 +1,87 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { getImagePath } from "../../utilities";
 
 export type MoveDirection = 'left' | 'right';
 export interface BannerState {
-  currentItemIndex: number;
+  currentImageIndex: number;
+  images: string[];
   moveDirection: MoveDirection;
 }
 
-export default function Banner({
-  bannerState,
-  countBanners,
-  onManualMove,
-}: {
-  bannerState: BannerState;
-  countBanners: number;
-  onManualMove: () => void;
-}) {
-  const firstItemIndex = bannerState.currentItemIndex;
+let intervalId: NodeJS.Timeout | null;
+
+export default function Banner() {
+    const [bannerState, setBannerState] = useState<BannerState>({
+        currentImageIndex: 0,
+        moveDirection: 'right',
+        images: Array(5).fill(null).map((_, index: number) => getBannerPathByIndex(index))
+    });
+
+    useEffect(() => {
+        intervalId = setInterval(() => {
+            const autoMoveEnabled = window.scrollY < 1;
+            if (autoMoveEnabled) {
+                const currentImageIndex = bannerState.currentImageIndex;
+                if (bannerState.moveDirection == 'right') {
+                    setBannerState({
+                        ...bannerState,
+                        currentImageIndex: getNextIndex(currentImageIndex, bannerState.images)
+                    });
+                } else {
+                    setBannerState({
+                        ...bannerState,
+                        currentImageIndex: getPreviousIndex(currentImageIndex, bannerState.images)
+                    });
+                }
+            }
+        }, 3000);
+
+        return () => {
+            if (intervalId) {
+                clearInterval(intervalId);
+            }
+            intervalId = null;
+        };
+    }, [bannerState]);
+
+  const foregroundImageIndex = bannerState.currentImageIndex;
   const moveNext = bannerState.moveDirection == 'right';
-  const secondItemIndex = moveNext
-    ? (bannerState.currentItemIndex + 1 + countBanners) % countBanners
-    : (bannerState.currentItemIndex - 1 + countBanners) % countBanners;
-  const firstItemPath = getBannerPathByIndex(firstItemIndex);
-  const secondItemPath = getBannerPathByIndex(secondItemIndex);
-  const firstItemBackground = `url(${firstItemPath}) no-repeat 50%/100%`;
-  const secondItemBackground = `url(${secondItemPath}) no-repeat 50%/100%`;
+  const backgroundImageIndex = moveNext
+    ? (bannerState.currentImageIndex + 1 + bannerState.images.length) % bannerState.images.length
+    : (bannerState.currentImageIndex - 1 + bannerState.images.length) % bannerState.images.length;
+  const foregroundImageBackground = `url(${bannerState.images[foregroundImageIndex]}) no-repeat 50%/100%`;
+  const backgroundImageBackground = `url(${bannerState.images[backgroundImageIndex]}) no-repeat 50%/100%`;
 
   return (
     <div id="slider">
       <div
-        key={firstItemIndex}
-        style={{ background: firstItemBackground }}
+        key={foregroundImageIndex}
+        style={{ background: foregroundImageBackground }}
         className="active slider-image"
       ></div>
       <div
-        key={secondItemIndex}
-        style={{ background: secondItemBackground }}
+        key={backgroundImageIndex}
+        style={{ background: backgroundImageBackground }}
         className="slider-image"
       ></div>
       <div
         className="previous-arrow"
         onClick={() => {
-          if (moveNext) onManualMove();
+            setBannerState({
+                ...bannerState,
+                moveDirection: "left",
+                currentImageIndex: getPreviousIndex(bannerState.currentImageIndex, bannerState.images)
+            });
         }}
       ></div>
       <div
         className="next-arrow"
         onClick={() => {
-          if (!moveNext) onManualMove();
+            setBannerState({
+                ...bannerState,
+                moveDirection: "right",
+                currentImageIndex: getNextIndex(bannerState.currentImageIndex, bannerState.images)
+            });
         }}
       ></div>
       <section>
@@ -59,6 +93,26 @@ export default function Banner({
       </section>
     </div>
   );
+}
+
+function getPreviousIndex(index: number, images: string[]) {
+    if (index > 0) {
+        return index - 1;
+    }
+    if (index < 0) {
+        throw new Error("Base index is out of allowed range");
+    }
+    return images.length - 1;
+}
+
+function getNextIndex(index: number, images: string[]) {
+    if (index < images.length - 1) {
+        return index + 1;
+    }
+    if (index >= images.length) {
+        throw new Error("Base index is out of allowed range");
+    }
+    return 0;
 }
 
 function getBannerPathByIndex(index: number) {
