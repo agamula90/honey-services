@@ -3,12 +3,12 @@ import {ArticleHref, articlesQuery} from './mocks';
 import Articles from './Articles';
 import styles from './news.module.css';
 import '../layout.css';
-import {getImagePath, useQueryWithCache} from '../../utilities';
+import {getImagePath, useGraphQLQuery} from '../../utilities';
 import ForCurious from './ForCurious';
 import DefaultProgressBar from "../DefaultProgressBar";
 
 export default function NewsPage() {
-  const articles = useQueryWithCache<ArticleHref[]>(articlesQuery);
+  const articles = useGraphQLQuery<ArticleHref>(articlesQuery);
   const [forCuriousSectionShown, setForCuriousSectionShown] = useState(false);
 
   if (articles.loading) {

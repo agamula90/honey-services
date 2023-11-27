@@ -1,11 +1,11 @@
 import React from "react";
 import {productsQuery, Product} from "./mocks";
 import styles from "./products.module.css";
-import {useQueryWithCache} from "../../utilities";
+import {useGraphQLQuery} from "../../utilities";
 import DefaultProgressBar from "../DefaultProgressBar";
 
 export default function ProductsPage() {
-    const products = useQueryWithCache<Product[]>(productsQuery);
+    const products = useGraphQLQuery<Product>(productsQuery);
 
     if (products.loading) {
         return <DefaultProgressBar />;

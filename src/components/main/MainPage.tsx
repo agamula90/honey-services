@@ -10,26 +10,19 @@ import '../layout.css';
 import '../nav-arrows.css';
 import styles from './main.module.css';
 import DefaultProgressBar from '../DefaultProgressBar';
-import {useQueryWithCache} from "../../utilities";
+import {useGraphQLQuery} from "../../utilities";
 
 export default function MainPage() {
-  const contentItems = useQueryWithCache<ContentItem[]>(contentItemsQuery);
-  const asideItems = useQueryWithCache<AsideItem[]>(supplementaryContentItemsQuery);
-
-  if (contentItems.loading || asideItems.loading) {
+  const contentItems = useGraphQLQuery<ContentItem>(contentItemsQuery);
+  const asideItems = useGraphQLQuery<AsideItem>(supplementaryContentItemsQuery);
+  if (asideItems.loading || contentItems.loading) {
     return <DefaultProgressBar />;
   }
-  if (contentItems.error) {
-    return `Error occurred: ${contentItems.error}`;
-  }
   if (asideItems.error) {
-    return `Error occurred: ${asideItems.error}`;
+    return `Error occurred when aside items loading: ${asideItems.error}`;
   }
-  if (!contentItems.data) {
-    return "Content items not found";
-  }
-  if (!asideItems.data) {
-    return "Aside items not found";
+  if (contentItems.error) {
+    return `Error occurred when content items loading: ${contentItems.error}`;
   }
 
   return (

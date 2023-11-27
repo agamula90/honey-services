@@ -1,5 +1,4 @@
 import {DocumentNode, useQuery} from "@apollo/client";
-import {useEffect} from "react";
 
 export function getImagePath(assetImagePath: string) {
   return `https://elasticbeanstalk-eu-central-1-306070261283.s3.eu-central-1.amazonaws.com/public/${assetImagePath}`;
@@ -38,33 +37,31 @@ export function formatDateAsLongString(date: Date) {
   return `${date.getDate()} ${month} ${date.getFullYear()} в ${hours}:${minutes}`;
 }
 
-export interface TargettedResult<T> {
-    data: T | undefined,
-    loading: boolean,
+export interface GraphQLResult<T> {
+    data: T[],
+    loading: boolean;
     error?: string
 }
 
-export function useQueryWithCache<T>(query: DocumentNode): TargettedResult<T> {
-    const queryResult = useQuery(query);
+export function useGraphQLQuery<T>(query: DocumentNode): GraphQLResult<T> {
+    const queryResult = useQuery(
+        query,
+        {
+            pollInterval: 60000
+        }
+    );
     const queryStripped = query.loc!.source.body.replace(/\s/g, "");
     const indexOfFirstCurlyBrace = queryStripped.indexOf("{");
     const indexOfSecondCurlyBrace = queryStripped.indexOf("{", indexOfFirstCurlyBrace + 1);
     const queryTarget = queryStripped.substring(indexOfFirstCurlyBrace + 1, indexOfSecondCurlyBrace);
 
-    useEffect(() => {
-        if(!queryResult.loading && !queryResult.error) {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            queryResult.client.writeQuery({ query, data: queryResult.data});
-        }
-    }, [queryResult.data]);
-
     if (queryResult.loading) {
-        return { loading: true, data: undefined};
+        return { loading: true, data: []};
     }
     if (queryResult.error) {
-        return { loading: false, error: queryResult.error.message, data: undefined };
+        return { loading: false, error: queryResult.error.message, data: [] };
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    return { loading: false, data: queryResult.data[queryTarget] as T };
+    return { loading: false, data: queryResult.data[queryTarget] as T[] };
 }
