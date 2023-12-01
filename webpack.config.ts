@@ -13,7 +13,7 @@ const configuration: webpack.Configuration = {
                 ]
             },
             {
-                test: /\.(ts|tsx)$/,
+                test: /\.ts|.tsx$/,
                 exclude: /node_modules$/,
                 use: 'ts-loader',
             }
