@@ -1,9 +1,14 @@
 import React from 'react';
+import { getNavItemTitle, NavigationItemType } from './navigationSlice';
 
-export default function Navigation({navItems, navIndex, onNavIndexChanged}: {
-    navItems: string[],
-    navIndex: number,
-    onNavIndexChanged: (index: number) => void
+export default function Navigation({
+    navItems,
+    navIndex,
+    onNavIndexChanged,
+}: {
+    navItems: NavigationItemType[];
+    navIndex: number;
+    onNavIndexChanged: (index: number) => void;
 }) {
     return (
         <nav>
@@ -11,7 +16,7 @@ export default function Navigation({navItems, navIndex, onNavIndexChanged}: {
                 if (index === navIndex) {
                     return (
                         <div key={index} className="active">
-                            {item}
+                            {getNavItemTitle(item)}
                         </div>
                     );
                 } else {
@@ -23,7 +28,7 @@ export default function Navigation({navItems, navIndex, onNavIndexChanged}: {
                                 setNavIndex(e, index, onNavIndexChanged);
                             }}
                         >
-                            {item}{' '}
+                            {getNavItemTitle(item)}{' '}
                         </a>
                     );
                 }
